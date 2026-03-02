@@ -9,28 +9,47 @@ import BottomNav from "@/components/app/BottomNav";
 export type Screen = "news" | "booking" | "garage" | "profile";
 
 export interface User {
+  id: number;
   name: string;
   phone: string;
+  token: string;
+  is_admin: boolean;
 }
 
 export default function Index() {
-  const [isAuth, setIsAuth] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const [activeScreen, setActiveScreen] = useState<Screen>("news");
-  const [user] = useState<User>({ name: "Алексей", phone: "+7 999 123-45-67" });
+  const [bookingCarId, setBookingCarId] = useState<number | undefined>();
 
-  if (!isAuth) {
-    return <AuthScreen onAuth={() => setIsAuth(true)} />;
+  const goToBooking = (carId?: number) => {
+    setBookingCarId(carId);
+    setActiveScreen("booking");
+  };
+
+  if (!user) {
+    return <AuthScreen onAuth={(u) => setUser(u)} />;
   }
 
   return (
     <div className="min-h-screen bg-background flex flex-col max-w-md mx-auto relative">
       <div className="flex-1 overflow-y-auto pb-24">
-        {activeScreen === "news" && <NewsScreen />}
-        {activeScreen === "booking" && <BookingScreen />}
-        {activeScreen === "garage" && <GarageScreen />}
-        {activeScreen === "profile" && <ProfileScreen user={user} />}
+        {activeScreen === "news" && <NewsScreen onBooking={() => goToBooking()} />}
+        {activeScreen === "booking" && (
+          <BookingScreen
+            token={user.token}
+            userId={user.id}
+            preselectedCarId={bookingCarId}
+            onBack={() => setActiveScreen("news")}
+          />
+        )}
+        {activeScreen === "garage" && (
+          <GarageScreen token={user.token} onBooking={(carId) => goToBooking(carId)} />
+        )}
+        {activeScreen === "profile" && (
+          <ProfileScreen user={user} token={user.token} onBooking={() => goToBooking()} />
+        )}
       </div>
-      <BottomNav active={activeScreen} onChange={setActiveScreen} />
+      <BottomNav active={activeScreen} onChange={(s) => { setBookingCarId(undefined); setActiveScreen(s); }} />
     </div>
   );
 }
