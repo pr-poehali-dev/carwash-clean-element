@@ -1,0 +1,12 @@
+{
+  "tests": [
+    {
+      "name": "Get busy slots",
+      "method": "GET",
+      "path": "/busy-slots?date=2026-03-05",
+      "expectedStatus": 200,
+      "expectedBody": {"busy": []},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

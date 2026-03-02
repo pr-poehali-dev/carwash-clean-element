@@ -1,0 +1,6 @@
+{
+  "auth": "https://functions.poehali.dev/93e6cf89-5622-47ce-9652-4ea75db18248",
+  "bookings": "https://functions.poehali.dev/92155641-e650-45a8-aaa0-b03575911c33",
+  "garage": "https://functions.poehali.dev/53141044-3ddc-4ac4-a457-ef649bb7cf18",
+  "admin": "https://functions.poehali.dev/4c125b11-b8ae-489a-9ec8-c32ab4673429"
+}

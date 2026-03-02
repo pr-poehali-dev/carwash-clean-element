@@ -1,0 +1,12 @@
+{
+  "tests": [
+    {
+      "name": "Stats unauthorized",
+      "method": "GET",
+      "path": "/stats",
+      "expectedStatus": 403,
+      "expectedBody": {"error": "string"},
+      "bodyMatcher": "partial"
+    }
+  ]
+}
